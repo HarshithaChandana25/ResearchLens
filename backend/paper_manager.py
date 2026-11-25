@@ -68,3 +68,17 @@ def view_saved_papers(user_id):
         print("Unable to retrieve saved papers:")
         print(error)
         return None
+def delete_saved_paper(user_id, paper_id):
+    try:
+        response = supabase.table("saved_papers").delete().eq("user_id", user_id).eq("paper_id", paper_id).execute()
+
+        if response.data:
+            print("Paper deleted from your saved list successfully!")
+            return True
+        else:
+            print("Paper was not found in your saved list.")
+            return False
+
+    except Exception as e:
+        print("Error deleting saved paper:", e)
+        return False
